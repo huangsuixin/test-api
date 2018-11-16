@@ -29,8 +29,8 @@ public class ApiController {
     @PostMapping("/save")
     public String save(@RequestBody ApiInfoDO apiInfoDO) {
         LOGGER.info("save入参:{}", apiInfoDO.toString());
-        apiInfoRepo.save(apiInfoDO);
-        return "success";
+        apiInfoRepo.saveAndFlush(apiInfoDO);
+        return "{\"id\":\"" + apiInfoDO.getId() + "\"}";
     }
 
     @GetMapping("findAll")

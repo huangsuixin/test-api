@@ -34,7 +34,7 @@ public class ApiInfoDO implements Serializable {
     /**
      * 内容
      */
-    @Column(name = "content")
+    @Column(name = "content", length = 10000)
     private String content;
 
     /**

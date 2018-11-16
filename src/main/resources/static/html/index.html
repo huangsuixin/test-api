@@ -7,14 +7,20 @@
 </head>
 <body>
 
+<h2>Welcome</h2>
+
+<input type="text" id="id" title="id"/>
+<input type="text" id="content" title="content"/>
+<button id="submit">保存</button>
+
+<p id="tag"></p>
+<p id="info"></p>
 <script>
     var HOST = "http://localhost:8080";
     $(function () {
 
         var data = '[{"id":1,"content":"hello","gmtCreate":null,"gmtModified":null},{"id":33,"content":"hello","gmtCreate":1542337479614,"gmtModified":1542337479614}]';
-        var content = JSON.stringify(data);
 
-        console.log(content);
         $.ajax({
             url: HOST + "/findAll",
             type: 'get',
@@ -24,32 +30,36 @@
             }
         });
 
-        var data = {
-            "content":content
-        };
-        $.ajax({
-            url: HOST + '/save',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data:data,
-            success: function (res) {
-                console.log(res);
-            },
-            error: function (res) {
-                console.log("error");
-                console.log(res);
-            }
+        $('#submit').click(function () {
+            var content = $('#content').val();
+            console.log(content);
+            save(content);
         });
 
-        // $.post(
-        //     HOST + "/save",
-        //     {"content":content},
-        //     function (res) {
-        //
-        //     },
-        //     "json"
-        // );
+        function save(data) {
+            var content = {
+                "content":data
+            };
+            $.ajax({
+                url: HOST + '/save',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data:JSON.stringify(content),
+                success: function (res) {
+                    $('#tag').text("成功");
+                    $('#info').text(JSON.stringify(res));
+                    console.log(res);
+                },
+                error: function (res) {
+                    $('#tag').text("失败");
+                    console.log("error");
+                    console.log(res);
+                }
+            });
+        }
+
+
     })
 </script>
 </body>
